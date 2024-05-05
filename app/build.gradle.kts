@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9" apply false
 }
 
 android {
@@ -47,7 +48,48 @@ android {
 }
 
 dependencies {
+    val nav_version = "2.7.7"
 
+    // Java language implementation
+    implementation("androidx.navigation:navigation-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-ui:$nav_version")
+
+    // Kotlin
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    // Feature module Support
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+
+    // Testing Navigation
+    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
+    // Jetpack Compose Integration
+    implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    val room_version = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
+
+    // optional - RxJava2 support for Room
+    implementation("androidx.room:room-rxjava2:$room_version")
+
+    // optional - RxJava3 support for Room
+    implementation("androidx.room:room-rxjava3:$room_version")
+
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation("androidx.room:room-guava:$room_version")
+
+    // optional - Test helpers
+    testImplementation("androidx.room:room-testing:$room_version")
+
+    // optional - Paging 3 Integration
+    implementation("androidx.room:room-paging:$room_version")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
