@@ -2,7 +2,7 @@ package com.example.timemanager.notes_feature.domain.repository
 
 import com.example.timemanager.notes_feature.domain.model.Note
 import kotlinx.coroutines.flow.Flow
-//фейковая репа для тестов бд
+//потом на этом интерфейсе можно будет плодить репы для тестов
 interface NoteRepository {
     fun getNotes(): Flow<List<Note>>
 
