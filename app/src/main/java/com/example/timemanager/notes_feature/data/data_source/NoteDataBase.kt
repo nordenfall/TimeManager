@@ -11,4 +11,9 @@ import com.example.timemanager.notes_feature.domain.model.Note
 abstract class NoteDataBase:RoomDatabase() {
 
     abstract val noteDao: NoteDao
+
+    companion object{
+        const val DB_NAME = "notes_db"
+    }
+
 }
