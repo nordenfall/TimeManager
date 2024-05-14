@@ -1,4 +1,4 @@
-package com.example.timemanager
+package com.example.myapplication
 
 import org.junit.Test
 

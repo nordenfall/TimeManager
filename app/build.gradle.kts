@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.timemanager"
+    namespace = "com.example.myapplication"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.timemanager"
+        applicationId = "com.example.myapplication"
         minSdk = 29
         targetSdk = 34
         versionCode = 1

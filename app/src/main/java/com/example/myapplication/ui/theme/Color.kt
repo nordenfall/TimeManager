@@ -1,4 +1,4 @@
-package com.example.timemanager.ui.theme
+package com.example.myapplication.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
