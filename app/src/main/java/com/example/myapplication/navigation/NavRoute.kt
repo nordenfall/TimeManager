@@ -1,8 +1,8 @@
 package com.example.myapplication.navigation
 
-sealed class NavRoute(val route:String) {
-    object StartScreen: NavRoute("start_screen")
-    object MainScreen: NavRoute("main_screen")
-    object AddScreen: NavRoute("add_screen")
-    object EventScreen: NavRoute("event_screen")
+enum class NavRoute(val route:String) {
+    StartScreen("start_screen"),
+    AddScreen("add_screen"),
+    EventScreen("event_screen"),
+    ProfileScreen("profile_screen")
 }

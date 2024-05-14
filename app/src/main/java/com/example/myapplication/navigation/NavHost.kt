@@ -1,13 +1,12 @@
 package com.example.myapplication.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.myapplication.view.AddScreen
-import com.example.myapplication.view.EventScreen
-import com.example.myapplication.view.MainScreen
-import com.example.myapplication.view.StartScreen
+import com.example.myapplication.view.EventScreens.AddScreen
+import com.example.myapplication.view.EventScreens.EventScreen
+import com.example.myapplication.view.NavScreens.ProfileScreen
+import com.example.myapplication.view.EventScreens.StartScreen
 
 
 @Composable
@@ -19,14 +18,14 @@ fun NavHost() {
         composable(NavRoute.StartScreen.route){
             StartScreen(navController)
         }
-        composable(NavRoute.MainScreen.route){
-            MainScreen(navController)
-        }
         composable(NavRoute.AddScreen.route){
             AddScreen(navController)
         }
         composable(NavRoute.EventScreen.route){
             EventScreen(navController)
+        }
+        composable(NavRoute.ProfileScreen.route){
+            ProfileScreen(navController)
         }
     }
 }

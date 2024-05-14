@@ -1,4 +1,4 @@
-package com.example.myapplication.view
+package com.example.myapplication.view.EventScreens
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
