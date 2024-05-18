@@ -1,4 +1,4 @@
-package com.example.myapplication.view.NavScreens
+package com.example.myapplication.view.navScreens
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun TagScreen(navHostController: NavHostController){
+fun TagScreen(navtController: NavHostController){
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding->
 
     }

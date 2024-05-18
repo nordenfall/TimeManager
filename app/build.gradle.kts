@@ -69,4 +69,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.androidx.navigation.compose)
+
+    implementation("com.google.accompanist:accompanist-pager:0.32.0")
+
+
 }

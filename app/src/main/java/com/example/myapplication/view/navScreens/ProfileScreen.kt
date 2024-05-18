@@ -1,4 +1,4 @@
-package com.example.myapplication.view.NavScreens
+package com.example.myapplication.view.navScreens
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
@@ -10,7 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 @Composable
-fun ProfileScreen(navHostController: NavHostController){
+fun ProfileScreen(navController: NavHostController){
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding->
 
     }
@@ -23,6 +23,6 @@ fun ProfileScreen(navHostController: NavHostController){
 @Composable
 fun ProfilePreview(){
     MyApplicationTheme {
-        ProfileScreen(navHostController = rememberNavController())
+        ProfileScreen(navController = rememberNavController())
     }
 }
