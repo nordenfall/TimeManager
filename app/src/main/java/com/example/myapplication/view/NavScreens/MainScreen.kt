@@ -1,6 +1,7 @@
 package com.example.myapplication.view.NavScreens
 
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -8,8 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 @Composable
-fun MainScreen(navHostController: NavHostController){
-
+fun MainScreen(navController: NavHostController){
+    Text(text = "oh man")
 }
 
 
@@ -19,6 +20,6 @@ fun MainScreen(navHostController: NavHostController){
 @Composable
 fun MainPreview(){
     MyApplicationTheme {
-        MainScreen(navHostController = rememberNavController())
+        MainScreen(navController = rememberNavController())
     }
 }

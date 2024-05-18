@@ -7,6 +7,7 @@ import com.example.myapplication.view.EventScreens.AddScreen
 import com.example.myapplication.view.EventScreens.EventScreen
 import com.example.myapplication.view.NavScreens.ProfileScreen
 import com.example.myapplication.view.EventScreens.StartScreen
+import com.example.myapplication.view.NavScreens.MainScreen
 
 
 @Composable
@@ -26,6 +27,9 @@ fun NavHost() {
         }
         composable(NavRoute.ProfileScreen.route){
             ProfileScreen(navController)
+        }
+        composable(NavRoute.MainScreen.route){
+            MainScreen(navController)
         }
     }
 }
