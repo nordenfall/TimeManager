@@ -54,7 +54,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.R
-import com.example.myapplication.model.Event
+import com.example.myapplication.model.Day
 import com.example.myapplication.navigation.eventsNavigation.NavRoute
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.viewModel.MainViewModel
@@ -62,9 +62,12 @@ import com.example.myapplication.viewModel.MainViewModelFactory
 
 @Composable
 fun MainScreen(navController: NavHostController){
-
-
+    val context = LocalContext.current
+    val mViewModel: MainViewModel = viewModel(
+        factory = MainViewModelFactory(context.applicationContext as Application))
     val showDialog = remember { mutableStateOf(false) }
+
+val days = mViewModel.readTest.observeAsState(listOf()).value
 
     showDialog.value = false
     Box(modifier = Modifier
@@ -104,29 +107,28 @@ fun MainScreen(navController: NavHostController){
                 )
             }
             WeekMonthParameter()
-            Column(modifier = Modifier
+            LazyColumn(modifier = Modifier
                 .fillMaxWidth()
                 .padding(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
+            ) {/*
                 DayCard(day = "Понедельник")
                 DayCard(day = "Вторник")
                 DayCard(day = "Среда")
                 DayCard(day = "Четверг")
                 DayCard(day = "Пятница")
                 DayCard(day = "Суббота")
-                DayCard(day = "Воскресенье")
-
+                DayCard(day = "Воскресенье")*/
+                items(days){day ->
+                    DayCard(day = day)
+                }
             }
         }
     }
 }
 
 @Composable
-fun DayCard(day: String) {
-    val context = LocalContext.current
-    val mViewModel: MainViewModel = viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
-    val events = mViewModel.readTest.observeAsState(listOf()).value
+fun DayCard(day:Day) {
     val showDialog = remember { mutableStateOf(false) }
     Card(
         elevation = CardDefaults.cardElevation(12.dp),
@@ -136,7 +138,7 @@ fun DayCard(day: String) {
             .clickable { showDialog.value = true }
     ) {
         Text(
-            text = day,
+            text = day.dayTitle,
             modifier = Modifier.padding(16.dp),
             style = MaterialTheme.typography.bodyLarge
         )
@@ -150,7 +152,7 @@ fun DayCard(day: String) {
                 Column(modifier = Modifier
                     .padding(10.dp),
                 ) {
-                    Text(day,
+                    Text(day.dayTitle,
                         style = TextStyle(
                             fontSize = 38.sp,
                             color = Color.Black,
@@ -170,9 +172,8 @@ fun DayCard(day: String) {
                     Divider()
                     Spacer(modifier = Modifier.height(16.dp))
                     LazyColumn(modifier = Modifier.fillMaxWidth()){
-                        items(events){item ->
-                            EventCard(event = item, description = item.subtitle)
-
+                        items(10){
+                            EventCard()
                         }
                     }
                 }
@@ -182,26 +183,28 @@ fun DayCard(day: String) {
 }
 
 @Composable
-fun EventCard(event:Event, description:String){
+fun EventCard(){
     var expanded by remember { mutableStateOf(false)}
+    val textSize = if(expanded)24.sp else 16.sp
+    val descriptionText = if(expanded)"Описание задачи" else ""
     Card(
         elevation = CardDefaults.cardElevation(8.dp),
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
-            .height(if (expanded) 200.dp else 80.dp)
+            .height(95.dp)
             .clickable { expanded = !expanded }
     ) {
         Column {
             Text(
-                text = event.title,
-                style = MaterialTheme.typography.titleMedium,
+                text = "oj",
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(8.dp)
             )
             if (expanded) {
                 Text(
-                    text = event.subtitle,
-                    style = MaterialTheme.typography.bodyLarge,
+                    text = "gfhgh",
+                    style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(8.dp)
                 )
             }

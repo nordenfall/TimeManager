@@ -46,7 +46,8 @@ import com.example.myapplication.utils.TYPE_ROOM
 @Composable
 fun StartScreen(navController: NavHostController){
     val context = LocalContext.current
-    val mViewModel:MainViewModel = viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+    val mViewModel:MainViewModel = viewModel(
+        factory = MainViewModelFactory(context.applicationContext as Application))
 
     var textLogin by remember { mutableStateOf("") }
     var textPassword by remember { mutableStateOf("") }
@@ -111,8 +112,8 @@ fun StartScreen(navController: NavHostController){
                     .shadow(6.dp, RoundedCornerShape(50))
                     .padding(1.dp),
                 onClick = {
-                    navController.navigate(NavRoute.MainScreen.route)
-                    mViewModel.initDatabase(TYPE_ROOM)
+                    mViewModel.initDataBase(TYPE_ROOM)
+                        navController.navigate(NavRoute.MainScreen.route)
                           },
                 interactionSource = interactionSource,
                 colors = ButtonDefaults.buttonColors(
