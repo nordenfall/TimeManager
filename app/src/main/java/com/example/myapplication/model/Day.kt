@@ -6,8 +6,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "days_table")
 data class Day(
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val dayId:Int = 0,
     @ColumnInfo
-    val dayTitle:String
+    val dayTitle:String,
+    @ColumnInfo
+    var events:List<Event> = emptyList()
 )

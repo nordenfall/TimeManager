@@ -35,19 +35,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.R
-import com.example.myapplication.viewModel.MainViewModel
 import com.example.myapplication.viewModel.MainViewModelFactory
 import com.example.myapplication.navigation.eventsNavigation.NavRoute
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.utils.TYPE_ROOM
+import com.example.myapplication.viewModel.MainViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartScreen(navController: NavHostController){
     val context = LocalContext.current
-    val mViewModel:MainViewModel = viewModel(
-        factory = MainViewModelFactory(context.applicationContext as Application))
 
     var textLogin by remember { mutableStateOf("") }
     var textPassword by remember { mutableStateOf("") }
@@ -111,10 +109,7 @@ fun StartScreen(navController: NavHostController){
                     .size(100.dp, 40.dp)
                     .shadow(6.dp, RoundedCornerShape(50))
                     .padding(1.dp),
-                onClick = {
-                    mViewModel.initDataBase(TYPE_ROOM)
-                        navController.navigate(NavRoute.MainScreen.route)
-                          },
+                onClick = { navController.navigate(NavRoute.MainScreen.route) },
                 interactionSource = interactionSource,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (isPressed) colorResource(id = R.color.light_green)

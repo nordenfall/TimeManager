@@ -73,7 +73,8 @@ dependencies {
 
     implementation (libs.androidx.room.runtime)
     implementation (libs.androidx.room.ktx)
-    implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
+    implementation(libs.androidx.runtime.livedata)
+    implementation(libs.kotlinx.coroutines.android)
 
 
 }

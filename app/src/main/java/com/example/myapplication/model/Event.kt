@@ -9,6 +9,8 @@ data class Event(
     @PrimaryKey(autoGenerate = true)
     val eventId:Int = 0,
     @ColumnInfo
+    val dayId:Int,
+    @ColumnInfo
     val eventTitle:String,
     @ColumnInfo
     val subtitle:String

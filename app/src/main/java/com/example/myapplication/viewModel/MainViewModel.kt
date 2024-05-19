@@ -1,49 +1,49 @@
 package com.example.myapplication.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.viewModelScope
+import androidx.room.Room
+import com.example.myapplication.database.room.AppDatabase
+import com.example.myapplication.database.room.dao.DayDao
+import com.example.myapplication.database.room.dao.DayWithEvents
+import com.example.myapplication.database.room.dao.EventDao
 import com.example.myapplication.model.Day
-import com.example.myapplication.utils.TYPE_FIRE
+import com.example.myapplication.model.Event
+import kotlinx.coroutines.launch
 
-import com.example.myapplication.utils.TYPE_ROOM
+class MainViewModel(application: Application) : AndroidViewModel(application) {
+    private val db = Room.databaseBuilder(
+        application,
+        AppDatabase::class.java, "app_database"
+    ).build()
 
+    private val dayDao: DayDao = db.dayDao()
+    private val eventDao: EventDao = db.eventDao()
 
-class MainViewModel(application:Application):AndroidViewModel(application) {
-    private val context = application
+    val days: LiveData<List<Day>> = db.dayDao().getAllDays()
+    val daysWithEvents: LiveData<List<DayWithEvents>> = db.dayDao().getAllDaysWithEvents()
 
-    val readTest:MutableLiveData<List<Day>> by lazy {
-        MutableLiveData<List<Day>>()
+    fun getEventsForDay(dayId: Int): LiveData<List<Event>> {
+        return eventDao.getEventsByDayId(dayId)
     }
-
-    val dbType:MutableLiveData<String> by lazy {
-        MutableLiveData<String>(TYPE_ROOM)
-    }
-
     init {
-        readTest.value =
-            when(dbType.value){
-                TYPE_ROOM -> {
-                    listOf<Day>(
-                        Day(dayTitle = "Понедельник"),
-                        Day(dayTitle = "Вторник"),
-                        Day(dayTitle = "Среда"),
-                        Day(dayTitle = "Четверг"),
-                        Day(dayTitle = "Пятница"),
-                        Day(dayTitle = "Суббота"),
-                        Day(dayTitle = "Воскресенье")
-
-                    )
-                }
-                TYPE_FIRE -> listOf()
-                else -> listOf()
+        viewModelScope.launch {
+            val days = listOf(
+                Day(dayTitle = "понедельник"),
+                Day(dayTitle = "вторник"),
+                Day(dayTitle = "среда"),
+                Day(dayTitle = "четверг"),
+                Day(dayTitle = "пятница"),
+                Day(dayTitle = "суббота"),
+                Day(dayTitle = "воскресеньек"),
+            )
+            days.forEach { day ->
+                db.dayDao().insertDay(day)
             }
+        }
     }
-
-
-    fun initDataBase(type:String){
-        dbType.value = type
-    }
-
 }
+
+

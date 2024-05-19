@@ -1,6 +1,5 @@
 package com.example.myapplication.view.navScreens
 import android.app.Application
-import android.app.Dialog
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -31,7 +29,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -55,6 +52,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.R
 import com.example.myapplication.model.Day
+import com.example.myapplication.model.Event
 import com.example.myapplication.navigation.eventsNavigation.NavRoute
 import com.example.myapplication.ui.theme.MyApplicationTheme
 import com.example.myapplication.viewModel.MainViewModel
@@ -66,8 +64,7 @@ fun MainScreen(navController: NavHostController){
     val mViewModel: MainViewModel = viewModel(
         factory = MainViewModelFactory(context.applicationContext as Application))
     val showDialog = remember { mutableStateOf(false) }
-
-val days = mViewModel.readTest.observeAsState(listOf()).value
+    val days = mViewModel.days.observeAsState(listOf()).value
 
     showDialog.value = false
     Box(modifier = Modifier
@@ -111,16 +108,10 @@ val days = mViewModel.readTest.observeAsState(listOf()).value
                 .fillMaxWidth()
                 .padding(10.dp),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {/*
-                DayCard(day = "Понедельник")
-                DayCard(day = "Вторник")
-                DayCard(day = "Среда")
-                DayCard(day = "Четверг")
-                DayCard(day = "Пятница")
-                DayCard(day = "Суббота")
-                DayCard(day = "Воскресенье")*/
+            ) {
                 items(days){day ->
-                    DayCard(day = day)
+                    val events = mViewModel.getEventsForDay(day.dayId).value?: emptyList()
+                    DayCard(day = day, events = events)
                 }
             }
         }
@@ -128,7 +119,7 @@ val days = mViewModel.readTest.observeAsState(listOf()).value
 }
 
 @Composable
-fun DayCard(day:Day) {
+fun DayCard(day:Day, events:List<Event>) {
     val showDialog = remember { mutableStateOf(false) }
     Card(
         elevation = CardDefaults.cardElevation(12.dp),
@@ -172,8 +163,8 @@ fun DayCard(day:Day) {
                     Divider()
                     Spacer(modifier = Modifier.height(16.dp))
                     LazyColumn(modifier = Modifier.fillMaxWidth()){
-                        items(10){
-                            EventCard()
+                        items(events){event->
+                            EventCard(event = event)
                         }
                     }
                 }
@@ -183,10 +174,8 @@ fun DayCard(day:Day) {
 }
 
 @Composable
-fun EventCard(){
+fun EventCard(event:Event){
     var expanded by remember { mutableStateOf(false)}
-    val textSize = if(expanded)24.sp else 16.sp
-    val descriptionText = if(expanded)"Описание задачи" else ""
     Card(
         elevation = CardDefaults.cardElevation(8.dp),
         modifier = Modifier
