@@ -70,7 +70,10 @@ dependencies {
 
     implementation(libs.androidx.navigation.compose)
 
-    implementation("com.google.accompanist:accompanist-pager:0.32.0")
+
+    implementation (libs.androidx.room.runtime)
+    implementation (libs.androidx.room.ktx)
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.7")
 
 
 }

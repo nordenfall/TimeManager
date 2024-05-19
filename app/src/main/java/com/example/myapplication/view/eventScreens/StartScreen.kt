@@ -1,4 +1,5 @@
 package com.example.myapplication.view.eventScreens
+import android.app.Application
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -24,22 +25,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.R
+import com.example.myapplication.viewModel.MainViewModel
+import com.example.myapplication.viewModel.MainViewModelFactory
 import com.example.myapplication.navigation.eventsNavigation.NavRoute
 import com.example.myapplication.ui.theme.MyApplicationTheme
+import com.example.myapplication.utils.TYPE_ROOM
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StartScreen(navController: NavHostController){
+    val context = LocalContext.current
+    val mViewModel:MainViewModel = viewModel(factory = MainViewModelFactory(context.applicationContext as Application))
+
     var textLogin by remember { mutableStateOf("") }
     var textPassword by remember { mutableStateOf("") }
     val maxLoginLength = 10
@@ -102,7 +110,10 @@ fun StartScreen(navController: NavHostController){
                     .size(100.dp, 40.dp)
                     .shadow(6.dp, RoundedCornerShape(50))
                     .padding(1.dp),
-                onClick = { navController.navigate(NavRoute.MainScreen.route) },
+                onClick = {
+                    navController.navigate(NavRoute.MainScreen.route)
+                    mViewModel.initDatabase(TYPE_ROOM)
+                          },
                 interactionSource = interactionSource,
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (isPressed) colorResource(id = R.color.light_green)
