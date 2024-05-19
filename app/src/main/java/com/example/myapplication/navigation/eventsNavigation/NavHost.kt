@@ -7,6 +7,7 @@ import com.example.myapplication.view.eventScreens.AddScreen
 import com.example.myapplication.view.eventScreens.EventScreen
 import com.example.myapplication.view.eventScreens.StartScreen
 import com.example.myapplication.view.navScreens.MainScreen
+import com.example.myapplication.view.navScreens.MenuScreen
 import com.example.myapplication.view.navScreens.ProfileScreen
 import com.example.myapplication.view.navScreens.TagScreen
 
@@ -17,6 +18,7 @@ sealed class NavRoute(val route:String){
     data object MainScreen:NavRoute("main_screen")
     data object ProfileScreen:NavRoute("profile_screen")
     data object TagScreen:NavRoute("tag_screen")
+    data object MenuScreen:NavRoute("menu_screen")
 }
 
 @Composable
@@ -43,6 +45,9 @@ fun AppNavHost(){
         }
         composable(NavRoute.TagScreen.route){
             TagScreen(navController)
+        }
+        composable(NavRoute.MenuScreen.route){
+            MenuScreen(navController)
         }
     }
 }
